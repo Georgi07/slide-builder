@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+
+  <title>Builder Example</title>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/css/reveal.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/css/theme/white.css" id="theme">
+
+  <style media="screen">
+    #demo-slide h2{
+      transition: 1s
+    }
+    .reveal pre {
+      box-shadow: none;
+      background: #f4f4f4;
+    }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+      text-transform: none
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1>Slide Builder</h1>
+        <h4>Scriptable reveal.js fragments for Technical University of Gabrovo</h4>
+        <h5>Created by Georgi Georgiev</h5>
+      </section>
+
+      <section id="demo-slide">
+        <h2>Example</h2>
+      </section>
+
+      <section id="wow-graphics">
+        <!-- canvas inserted by script -->
+      </section>
+
+      <section>
+        <h3>github</h3>
+        <p><a href="https://github.com/Georgi07/slide-builder">Georgi07/slide-builder</a></p>
+      </section>
+
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/lib/js/head.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.js"></script>
+
+  <script>
+
+    Reveal.initialize({
+      center: true,
+      transition: 'convex',
+      transitionSpeed: 'slow',
+      history: true,
+      dependencies: [
+        { src: '../slide-builder.js', callback: function(){
+
+          var element = document.querySelector('#demo-slide')
+          var heading = element.firstElementChild
+
+          new SlideBuilder(element)
+
+            .fragments([
+              function() {
+                heading.innerText = 'Fragment one'
+                heading.style.transform = 'scale(2) rotate(45deg)'
+              },
+              function() {
+                heading.innerText = 'Fragment two'
+                heading.style.transform = 'scale(-1) rotate(-25deg)'
+              },
+              function() {
+                heading.innerText = 'Fragment three'
+                heading.style.transform = 'scale(1) rotate(360deg)'
+              }
+            ])
+
+        }},
+
+        /*
+          alternatively, wrap in a different file (makes
+          it nice for modular slides)
+        */
+        { src: 'graphics-slide.js', callback: function(){
+          new GraphicsSlide('#wow-graphics')
+        }}
+      ]
+    })
+
+  </script>
+
+  </body>
+</html>
